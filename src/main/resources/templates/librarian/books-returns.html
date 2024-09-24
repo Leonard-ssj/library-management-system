@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Returns Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- Contenedor principal con flexbox para barra lateral y contenido -->
+    <div class="flex">
+        <!-- Barra de navegación lateral -->
+        <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
+            <ul class="space-y-4">
+                <li><a href="/librarian/list-books" class="hover:text-gray-200">Gestionar Libros</a></li>
+                <li><a href="/librarian/add-book" class="hover:text-gray-200">Agregar Libro</a></li>
+                <li><a href="/librarian/manage-loans" class="hover:text-gray-200">Solicitudes de Préstamos</a></li>
+                <li><a href="/librarian/books-returns" class="hover:text-gray-200">Devolucion de Prestamo</a></li>
+                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Prestamos Devueltos</a></li>
+                <!-- Enlace de cierre de sesión -->
+                <li class="mt-auto">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="hover:text-gray-200">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenedor del contenido principal -->
+        <div class="w-4/5 p-4">
+            <h1 class="text-3xl font-bold mb-4">Devolucion de Libros</h1>
+
+            <!-- Préstamos aceptados (Accepted Loans) -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold mb-2">Prestamos con estatus de Accepted</h2>
+                <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+                    <table class="min-w-full text-left">
+                        <thead class="bg-gray-800 text-white">
+                            <tr>
+                                <th class="py-2 px-4">Usuario</th>
+                                <th class="py-2 px-4">Libro</th>
+                                <th class="py-2 px-4">Fecha limite de prestamo</th>
+                                
+                                <th class="py-2 px-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Bucle sobre los préstamos aceptados -->
+                            <tr th:each="loan : ${acceptedLoans}">
+                                <td class="py-2 px-4" th:text="${loan.user.name}"></td>
+                                <td class="py-2 px-4" th:text="${loan.book.title}"></td>
+                                <td class="py-2 px-4" th:text="${loan.loanDate}"></td>
+                                
+                                <td class="py-2 px-4">
+                                    <form th:action="@{/return-book}" method="post">
+                                        <input type="hidden" name="loanId" th:value="${loan.id}">
+                                        <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded">Marcar como devuelto</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Préstamos vencidos (Overdue Loans) -->
+            <div>
+                <h2 class="text-2xl font-semibold mb-2">Prestamos con estatus de Overdue</h2>
+                <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+                    <table class="min-w-full text-left">
+                        <thead class="bg-gray-800 text-white">
+                            <tr>
+                                <th class="py-2 px-4">Usuario</th>
+                                <th class="py-2 px-4">Libro</th>
+                                <th class="py-2 px-4">Fecha limite de prestamo</th>
+                                
+                                <th class="py-2 px-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Bucle sobre los préstamos vencidos -->
+                            <tr th:each="loan : ${overdueLoans}">
+                                <td class="py-2 px-4" th:text="${loan.user.name}"></td>
+                                <td class="py-2 px-4" th:text="${loan.book.title}"></td>
+                                <td class="py-2 px-4" th:text="${loan.loanDate}"></td>
+                                
+                                <td class="py-2 px-4">
+                                    <form th:action="@{/return-book}" method="post">
+                                        <input type="hidden" name="loanId" th:value="${loan.id}">
+                                        <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded">Marcar como devuelto</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-800 text-white text-center py-4">
+        <p class="text-sm">Creado por Leonardo Alonso Aldana</p>
+        <p class="text-sm">&copy; 2024 Biblioteca. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

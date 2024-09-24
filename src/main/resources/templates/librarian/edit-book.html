@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Libro - Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Contenedor principal -->
+    <div class="flex-grow flex">
+        <!-- Barra de navegación lateral -->
+        <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
+            <ul class="space-y-4">
+                <li><a href="/librarian/list-books" class="hover:text-gray-200">Gestionar Libros</a></li>
+                <li><a href="/librarian/add-book" class="hover:text-gray-200">Agregar Libro</a></li>
+                <li><a href="/librarian/manage-loans" class="hover:text-gray-200">Solicitudes de Préstamos</a></li>
+                <li><a href="/librarian/books-returns" class="hover:text-gray-200">Devolucion de Prestamo</a></li>
+                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Prestamos Devueltos</a></li>
+                <!-- Enlace de cierre de sesión -->
+                <li class="mt-auto">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="hover:text-gray-200">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sección de contenido principal -->
+        <div class="w-4/5 p-8">
+            <!-- Título principal -->
+            <h1 class="text-3xl font-bold mb-8 text-gray-800">Editar Libro</h1>
+
+            <!-- Formulario para editar el libro -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-bold mb-4">Detalles del Libro</h2>
+                <form th:action="@{/librarian/edit-book/{id}/update(id=${book.id})}" method="post" class="space-y-4">
+                    
+                    <!-- Campo para el título del libro -->
+                    <div>
+                        <label for="title" class="block text-gray-700 font-bold mb-2">Título:</label>
+                        <input type="text" id="title" name="title" th:value="${book.title}" required
+                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
+                    </div>
+
+                    <!-- Campo para el autor del libro -->
+                    <div>
+                        <label for="author" class="block text-gray-700 font-bold mb-2">Autor:</label>
+                        <input type="text" id="author" name="author" th:value="${book.author}" required
+                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
+                    </div>
+
+                    <!-- Campo para el ISBN -->
+                    <div>
+                        <label for="isbn" class="block text-gray-700 font-bold mb-2">ISBN:</label>
+                        <input type="text" id="isbn" name="isbn" th:value="${book.isbn}" maxlength="13" pattern="\d*"
+                               title="Ingrese solo números de 13 dígitos" required
+                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
+                    </div>
+
+                    <!-- Campo para la categoría -->
+                    <div>
+                        <label for="category" class="block text-gray-700 font-bold mb-2">Categoría:</label>
+                        <select id="category" name="category" required
+                                class="border border-gray-300 rounded-lg px-4 py-2 w-full">
+                            <option th:value="${book.category}" th:text="${book.category}">Categoría</option>
+                            <option value="FICTION">Ficción</option>
+                            <option value="SCIENCE">Ciencia</option>
+                            <option value="HISTORY">Historia</option>
+                            <option value="TECHNOLOGY">Tecnología</option>
+                            <option value="ART">Arte</option>
+                            <option value="SPORTS">Deportes</option>
+                            <option value="LITERATURE">Literatura</option>
+                            <option value="BIOGRAPHY">Biografía</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo para la cantidad disponible -->
+                    <div>
+                        <label for="quantity" class="block text-gray-700 font-bold mb-2">Cantidad disponible:</label>
+                        <input type="number" id="quantity" name="quantity" th:value="${book.availableQuantity}" min="0"
+                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
+                    </div>
+
+                    <!-- Botón para actualizar el libro -->
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md px-4 py-2">Actualizar Libro</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-800 text-white text-center py-4">
+        <p class="text-sm">Creado por Leonardo Alonso Aldana</p>
+        <p class="text-sm">&copy; 2024 Biblioteca. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

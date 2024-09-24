@@ -1,0 +1,85 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Página Principal - Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Contenedor principal -->
+    <div class="flex-grow flex">
+        <!-- Barra de navegación lateral -->
+        <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
+            <ul class="space-y-4">
+                <li><a href="/global/index" class="hover:text-gray-200">Página Principal</a></li>
+                <li><a href="/profile" class="hover:text-gray-200">Mi Perfil</a></li>
+                <li><a href="/user/my-loans" class="hover:text-gray-200">Mis Prestamos</a></li>
+                <!-- Enlace de cierre de sesión -->
+                <li class="mt-auto">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="hover:text-gray-200">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sección de contenido principal -->
+        <div class="w-4/5 p-8">
+            <!-- Título principal -->
+            <h1 class="text-3xl font-bold mb-8 text-gray-800">Libros en la Biblioteca</h1>
+
+            <!-- Barra de búsqueda y filtrado combinada -->
+            <div class="flex mb-6 space-x-4">
+                <!-- Buscar por ISBN -->
+                <form th:action="@{/buscar}" method="get" class="flex items-center">
+                    <label for="isbn-search" class="block text-gray-700 font-bold mr-2">Buscar por ISBN:</label>
+                    <input type="text" id="isbn-search" name="isbn" placeholder="Ingrese ISBN" 
+                           maxlength="13" pattern="\d*" 
+                           title="Ingrese solo números de 13 dígitos" 
+                           class="border border-gray-300 rounded-lg px-4 py-2 mr-2 w-48">
+                    <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2">Buscar</button>
+                </form>
+
+                <!-- Filtrar por categoría -->
+                <form th:action="@{/buscar}" method="get" class="flex items-center">
+                    <label for="category-filter" class="block text-gray-700 font-bold mr-2">Filtrar por categoría:</label>
+                    <select id="category-filter" name="category" class="border border-gray-300 rounded-lg px-4 py-2 w-48">
+                        <option value="all">Todas</option>
+                        <option value="FICTION">Ficción</option>
+                        <option value="SCIENCE">Ciencia</option>
+                        <option value="HISTORY">Historia</option>
+                        <option value="TECHNOLOGY">Tecnología</option>
+                        <option value="ART">Arte</option>
+                        <option value="SPORTS">Deportes</option>
+                        <option value="LITERATURE">Literatura</option>
+                        <option value="BIOGRAPHY">Biografía</option>
+                    </select>
+                    <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2 ml-2">Filtrar</button>
+                </form>
+            </div>
+
+            <!-- Grid de libros -->
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Sección para mostrar los libros -->
+                <div th:each="book : ${books}" class="bg-white rounded-lg shadow-md p-4">
+                    <img th:src="@{${book.imagePath}}" alt="Portada del libro" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h2 class="text-xl font-bold" th:text="${book.title}">Título del Libro</h2>
+                    <p class="text-gray-600" th:text="${book.author}">Autor del Libro</p>
+                    <p class="text-gray-600" th:text="${book.isbn}">ISBN: 000000</p>
+                    <p class="text-gray-600" th:text="'Categoría: ' + ${book.category}">Categoría: General</p>
+                    <p class="text-gray-800 font-semibold" th:text="'Cantidad: ' + ${book.availableQuantity}">Cantidad: 0</p>
+                    <!-- Botón para solicitar préstamo -->
+                    <a th:href="@{/user/apply-for-a-loan/{bookId}(bookId=${book.id})}" class="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 inline-block">Solicitar Préstamo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-800 text-white text-center py-4">
+        <p class="text-sm">Creado por Leonardo Alonso Aldana</p>
+        <p class="text-sm">&copy; 2024 Biblioteca. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

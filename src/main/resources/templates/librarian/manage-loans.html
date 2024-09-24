@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Gestionar Solicitudes de Préstamos - Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <div class="flex-grow flex">
+        <!-- Barra lateral de navegación -->
+        <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
+            <ul class="space-y-4">
+                <li><a href="/librarian/list-books" class="hover:text-gray-200">Gestionar Libros</a></li>
+                <li><a href="/librarian/add-book" class="hover:text-gray-200">Agregar Libro</a></li>
+                <li><a href="/librarian/manage-loans" class="hover:text-gray-200">Solicitudes de Préstamos</a></li>
+                <li><a href="/librarian/books-returns" class="hover:text-gray-200">Devolucion de Prestamo</a></li>
+                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Prestamos Devueltos</a></li>
+                <!-- Enlace de cierre de sesión -->
+                <li class="mt-auto">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="hover:text-gray-200">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sección principal -->
+        <div class="w-4/5 p-8">
+            <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Gestionar Solicitudes de Préstamos</h1>
+
+            <!-- Bloque para mostrar el error -->
+            <div th:if="${error}" class="bg-red-200 text-red-800 p-2 rounded text-center">
+                <p th:text="${error}"></p>
+            </div>
+
+            <!-- Tabla para mostrar los préstamos pendientes -->
+            <table class="min-w-full bg-white rounded-lg shadow-md text-center">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Libro</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Usuario</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Fecha de Solicitud</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Duración</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="loan : ${pendingLoans}">
+                        <td class="border py-2 px-4" th:text="${loan.book.title}">Libro</td>
+                        <td class="border py-2 px-4" th:text="${loan.user.username}">Usuario</td>
+                        <td class="border py-2 px-4" th:text="${loan.requestDate}">Fecha de Solicitud</td>
+                        <!-- Mostrar la duración legible utilizando el método getLabel() -->
+                        <td class="border py-2 px-4" th:text="${loan.duration.label}">Duración</td>
+                        <td class="border py-2 px-4">
+                            <div class="flex justify-center space-x-2">
+                                <!-- Flex para centrar y espacio entre botones -->
+                                <form th:action="@{/librarian/accept-loan/{loanId}(loanId=${loan.id})}" method="post">
+                                    <button type="submit"
+                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
+                                        Aceptar
+                                    </button>
+                                </form>
+                                <form th:action="@{/librarian/reject-loan/{loanId}(loanId=${loan.id})}" method="post">
+                                    <button type="submit"
+                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow">
+                                        Rechazar
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-800 text-white text-center py-4">
+        <p class="text-sm">Creado por Leonardo Alonso Aldana</p>
+        <p class="text-sm">&copy; 2024 Biblioteca. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

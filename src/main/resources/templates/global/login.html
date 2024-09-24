@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Iniciar Sesión - Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <!-- Contenedor principal -->
+    <div class="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
+        <!-- Título principal -->
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">Iniciar Sesión</h1>
+
+        <!-- Mostrar mensaje de logout exitoso -->
+        <div th:if="${param.logout}" class="bg-green-200 text-green-800 p-4 mb-4 rounded-md">
+            <p>Has cerrado sesión correctamente.</p>
+        </div>
+
+        <!-- Mostrar mensaje de error si existe -->
+        <div th:if="${param.error}" class="bg-red-200 text-red-800 p-4 mb-4 rounded-md">
+            <p>Usuario o contraseña incorrectos. Inténtalo de nuevo.</p>
+        </div>
+
+        <!-- Formulario de inicio de sesión -->
+        <form th:action="@{/global/login}" method="post" class="space-y-4">
+            <!-- Campo para el nombre de usuario -->
+            <div>
+                <label for="username" class="block text-gray-700 font-bold mb-2">Nombre de Usuario:</label>
+                <input type="text" id="username" name="username" placeholder="Ingresa tu nombre de usuario" required
+                       class="border border-gray-300 rounded-lg px-4 py-2 w-full">
+            </div>
+
+            <!-- Campo para la contraseña -->
+            <div>
+                <label for="password" class="block text-gray-700 font-bold mb-2">Contraseña:</label>
+                <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required
+                       class="border border-gray-300 rounded-lg px-4 py-2 w-full">
+            </div>
+
+            <!-- Botón para enviar -->
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md px-4 py-2 w-full">
+                Iniciar Sesión
+            </button>
+        </form>
+
+        <!-- Enlace para el registro -->
+        <div class="mt-4">
+            <p>¿No tienes una cuenta? <a th:href="@{/user/register}" class="text-blue-600 hover:underline">Regístrate aquí</a></p>
+        </div>
+    </div>
+</body>
+</html>

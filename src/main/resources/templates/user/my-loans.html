@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Mis Préstamos - Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Contenedor principal -->
+    <div class="flex-grow flex">
+        <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
+            <ul class="space-y-4">
+                <li><a href="/global/index" class="hover:text-gray-200">Página Principal</a></li>
+                <li><a href="/profile" class="hover:text-gray-200">Mi Perfil</a></li>
+                <li><a href="/user/my-loans" class="hover:text-gray-200">Mis Préstamos</a></li>
+                <li class="mt-auto">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="hover:text-gray-200">Cerrar sesión</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sección principal -->
+        <div class="w-4/5 p-8">
+            <h1 class="text-3xl font-bold mb-8 text-gray-800">Mis Préstamos</h1>
+
+            <!-- Mensajes de validación -->
+            <div th:if="${error}" class="bg-red-500 text-white p-4 mb-4 rounded">
+                <p th:text="${error}"></p>
+            </div>
+            <div th:if="${success}" class="bg-green-500 text-white p-4 mb-4 rounded">
+                <p th:text="${success}"></p>
+            </div>
+
+            <!-- Mensaje cuando no hay préstamos -->
+            <div th:if="${loans.isEmpty()}" class="text-center text-gray-600">
+                <p>No tienes préstamos activos en este momento.</p>
+            </div>
+
+            
+            <!-- Listado de préstamos -->
+            <div th:if="${!loans.isEmpty()}" class="space-y-4">
+                <div th:each="loan : ${loans}" class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-bold mb-2" th:text="${loan.book.title}">Título del Libro</h2>
+                    <p class="text-gray-700 mb-1"><strong>Autor:</strong> <span th:text="${loan.book.author}"></span>
+                    </p>
+                    <p class="text-gray-700 mb-1">
+                        <strong>Fecha de Solicitud:</strong>
+                        <span th:text="${loan.requestDate.format(dateFormatter)}"></span>
+                    </p>
+                    <p class="text-gray-700 mb-1">
+                        <strong>Fecha Esperada de Devolución:</strong>
+                        <span th:text="${loan.loanDate.format(dateFormatter)}"></span>
+                    </p>
+
+                    <!-- Lógica para mostrar mensajes según el estado del préstamo -->
+                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).PENDING}" class="text-yellow-500 font-bold mb-1">
+                        ¡Acude con el Bibliotecario para Aceptar tu solicitud de prestamo!
+                    </p>
+                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).ACCEPTED and loan.returnDate == null}" class="text-red-600 font-bold mb-1">
+                        ¡El Libro lo tienes en prestamo, Devuelvelo antes de la Fecha esperada para su Devolución!
+                    </p>
+                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).RETURNED}" class="text-green-600 font-bold mb-1">
+                        ¡Libro devuelto, puedes volver a solicitarlo!
+                    </p>
+                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).OVERDUE}" class="text-red-600 font-bold mb-1">
+                        ¡La fecha de devolución ya pasó, por favor devuelve el libro lo antes posible!
+                    </p>
+                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).REJECTED}" class="text-red-600 font-bold mb-1">
+                        ¡Solicitud de préstamo rechazada!
+                    </p>
+                    
+
+                    <p class="text-gray-700"><strong>Estado:</strong> <span th:text="${loan.status}"></span></p>
+                    
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-800 text-white text-center py-4">
+        <p class="text-sm">Creado por Leonardo Alonso Aldana</p>
+        <p class="text-sm">&copy; 2024 Biblioteca. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

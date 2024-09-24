@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Préstamos Devueltos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <div class="flex-grow flex">
+        <!-- Barra lateral de navegación -->
+        <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
+            <ul class="space-y-4">
+                <li><a href="/librarian/list-books" class="hover:text-gray-200">Gestionar Libros</a></li>
+                <li><a href="/librarian/add-book" class="hover:text-gray-200">Agregar Libro</a></li>
+                <li><a href="/librarian/manage-loans" class="hover:text-gray-200">Solicitudes de Préstamos</a></li>
+                <li><a href="/librarian/books-returns" class="hover:text-gray-200">Devolucion de Prestamo</a></li>
+                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Prestamos Devueltos</a></li>
+                
+                <!-- Enlace de cierre de sesión -->
+                <li class="mt-auto">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="hover:text-gray-200">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sección principal -->
+        <div class="w-4/5 p-8">
+            <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Historial de Préstamos Devueltos</h1>
+
+            <!-- Tabla de historial de préstamos -->
+            <table class="min-w-full bg-white rounded-lg shadow-md text-center">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-blue-800 text-white">ID del Préstamo</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Libro</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Usuario</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Fecha de Devolución</th>
+                        <th class="py-2 px-4 bg-blue-800 text-white">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="loan : ${returnedLoans}">
+                        <td class="border py-2 px-4" th:text="${loan.id}">ID</td>
+                        <td class="border py-2 px-4" th:text="${loan.book.title}">Título del Libro</td>
+                        <td class="border py-2 px-4" th:text="${loan.user.username}">Usuario</td>
+                        <td class="border py-2 px-4" th:text="${loan.returnDate}">Fecha de Devolución</td>
+                        <td class="border py-2 px-4" th:text="${loan.status}">Estado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-800 text-white text-center py-4">
+        <p class="text-sm">Creado por Leonardo Alonso Aldana</p>
+        <p class="text-sm">&copy; 2024 Biblioteca. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

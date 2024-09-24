@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Mi Perfil - Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Contenedor principal -->
+    <div class="flex-grow flex">
+        <!-- Barra de navegación lateral con color azul (como en la página de Agregar Libro) -->
+        <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
+            <ul class="space-y-4">
+                <li><a href="/global/index" class="hover:text-gray-200">Página Principal</a></li>
+                <li><a href="/profile" class="hover:text-gray-200">Mi Perfil</a></li>
+                <li><a href="/user/my-loans" class="hover:text-gray-200">Mis Prestamos</a></li>
+                <!-- Enlace de cierre de sesión -->
+                <li class="mt-auto">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="hover:text-gray-200">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sección de contenido principal -->
+        <div class="w-4/5 p-8 bg-white shadow-md rounded-lg m-8">
+            <!-- Título principal -->
+            <h1 class="text-3xl font-bold mb-8 text-gray-800">Mi Perfil</h1>
+
+            <!-- Formulario de actualización de perfil -->
+            <form th:action="@{/profile/actualizar}" method="post" class="space-y-6">
+                <!-- Campo de usuario -->
+                <div>
+                    <label for="username" class="block text-lg font-semibold text-gray-700">Nombre de usuario</label>
+                    <input type="text" id="username" name="username" th:value="${user.username}"
+                        class="form-input mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3" />
+                    <span th:if="${usernameError}" th:text="${usernameError}" class="text-red-500 text-sm"></span>
+                </div>
+
+                <!-- Campo de correo electrónico -->
+                <div>
+                    <label for="email" class="block text-lg font-semibold text-gray-700">Correo electrónico</label>
+                    <input type="email" id="email" name="email" th:value="${user.email}"
+                        class="form-input mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3" />
+                    <span th:if="${emailError}" th:text="${emailError}" class="text-red-500 text-sm"></span>
+                </div>
+
+
+                <!-- Botón de enviar -->
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 shadow-lg">
+                        Actualizar
+                    </button>
+                </div>
+            </form>
+
+            <!-- Mensaje de error general -->
+            <div th:if="${error}" class="mt-4 text-red-500 font-semibold" th:text="${error}"></div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-800 text-white text-center py-4">
+        <p class="text-sm">Creado por Leonardo Alonso Aldana</p>
+        <p class="text-sm">&copy; 2024 Biblioteca. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>
