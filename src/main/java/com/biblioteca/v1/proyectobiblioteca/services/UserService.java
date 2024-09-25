@@ -1,5 +1,6 @@
 package com.biblioteca.v1.proyectobiblioteca.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.biblioteca.v1.proyectobiblioteca.dto.CreateUserDTO;
@@ -12,5 +13,6 @@ public interface UserService {
     Optional<User> findByEmail(String email);
     void deleteUser(Long id);
     void registerNewUser(CreateUserDTO userDTO) throws Exception; // Método para registrar un nuevo usuario
-
+    List<User> findAll(); // Método para obtener todos los usuarios
+    
 }

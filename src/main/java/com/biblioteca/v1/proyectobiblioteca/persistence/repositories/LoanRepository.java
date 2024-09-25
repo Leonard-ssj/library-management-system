@@ -25,6 +25,6 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     // (Opcional) Encuentra préstamos atrasados basados en returnDate
     List<Loan> findByUserAndStatusAndReturnDateBefore(User user, Loan.LoanStatus status, LocalDate returnDate);
-
+    
     
 }

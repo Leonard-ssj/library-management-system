@@ -2,7 +2,7 @@ package com.biblioteca.v1.proyectobiblioteca.servicesImpl;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,4 +131,6 @@ public class LoanServiceImpl implements LoanService {
             loanRepository.save(loan);
         }
     }
+
+    
 }

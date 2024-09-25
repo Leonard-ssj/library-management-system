@@ -13,8 +13,8 @@ import com.biblioteca.v1.proyectobiblioteca.persistence.repositories.RoleReposit
 import com.biblioteca.v1.proyectobiblioteca.persistence.repositories.UserRepository;
 import com.biblioteca.v1.proyectobiblioteca.services.UserService;
 
-
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,7 +27,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -88,5 +89,12 @@ public class UserServiceImpl implements UserService {
         return roleRepository.findByName(eRole)
                 .orElseThrow(() -> new Exception("Rol " + eRole + " no encontrado"));
     }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll(); // Implementación para obtener todos los usuarios
+    }
+
+    
 
 }
