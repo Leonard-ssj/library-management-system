@@ -24,7 +24,7 @@
 
         <!-- Sección principal -->
         <div class="w-4/5 p-8">
-            <h1 class="text-3xl font-bold mb-8 text-gray-800">Mis Préstamos</h1>
+            <h1 class="font-bold text-5xl mb-10">Mis Préstamos</h1>
 
             <!-- Mensajes de validación -->
             <div th:if="${error}" class="bg-red-500 text-white p-4 mb-4 rounded">
@@ -39,46 +39,73 @@
                 <p>No tienes préstamos activos en este momento.</p>
             </div>
 
-            
-            <!-- Listado de préstamos -->
-            <div th:if="${!loans.isEmpty()}" class="space-y-4">
-                <div th:each="loan : ${loans}" class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-bold mb-2" th:text="${loan.book.title}">Título del Libro</h2>
-                    <p class="text-gray-700 mb-1"><strong>Autor:</strong> <span th:text="${loan.book.author}"></span>
-                    </p>
-                    <p class="text-gray-700 mb-1">
-                        <strong>Fecha de Solicitud:</strong>
-                        <span th:text="${loan.requestDate.format(dateFormatter)}"></span>
-                    </p>
-                    <p class="text-gray-700 mb-1">
-                        <strong>Fecha Esperada de Devolución:</strong>
-                        <span th:text="${loan.loanDate.format(dateFormatter)}"></span>
-                    </p>
-
-                    <!-- Lógica para mostrar mensajes según el estado del préstamo -->
-                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).PENDING}" class="text-yellow-500 font-bold mb-1">
-                        ¡Acude con el Bibliotecario para Aceptar tu solicitud de prestamo!
-                    </p>
-                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).ACCEPTED and loan.returnDate == null}" class="text-red-600 font-bold mb-1">
-                        ¡El Libro lo tienes en prestamo, Devuelvelo antes de la Fecha esperada para su Devolución!
-                    </p>
-                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).RETURNED}" class="text-green-600 font-bold mb-1">
-                        ¡Libro devuelto, puedes volver a solicitarlo!
-                    </p>
-                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).OVERDUE}" class="text-red-600 font-bold mb-1">
-                        ¡La fecha de devolución ya pasó, por favor devuelve el libro lo antes posible!
-                    </p>
-                    <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).REJECTED}" class="text-red-600 font-bold mb-1">
-                        ¡Solicitud de préstamo rechazada!
-                    </p>
-                    
-
-                    <p class="text-gray-700"><strong>Estado:</strong> <span th:text="${loan.status}"></span></p>
-                    
-                    
-                    
-                </div>
+            <!-- Texto motivacional -->
+            <div class="bg-blue-100 text-blue-900 p-6 rounded mb-8">
+                <h2 class="text-2xl font-semibold mb-4">¡Sigue disfrutando de la lectura!</h2>
+                <p class="text-lg">Recuerda que cada libro es una oportunidad para aprender algo nuevo y expandir tus horizontes. Mantén tu hábito de lectura, y si tienes algún préstamo activo, asegúrate de devolver los libros a tiempo para que otros también puedan disfrutarlos. ¡Sigue adelante, cada página cuenta!</p>
             </div>
+
+            <!-- Listado de préstamos -->
+            <div th:if="${!loans.isEmpty()}"
+                class="container relative flex flex-col justify-between w-full max-w-6xl px-10 mx-auto mt-5 space-y-4">
+                <div th:each="loan : ${loans}" class="relative flex flex-col w-full mb-10 sm:flex-row">
+                    <div class="w-full mb-10 sm:mb-0 sm:w-1/2">
+                        <div class="relative h-full ml-0 mr-0 sm:mr-10">
+                            <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-blue-800 rounded-lg"></span>
+                            <div class="relative h-full p-5 bg-white border-2 border-blue-800 rounded-lg">
+                                <div class="flex items-center -mt-1">
+                                    <!-- Cambié el estilo de la fuente -->
+                                    <h3 class="my-2 text-lg font-bold text-gray-800"
+                                        style="font-family: 'Arial', sans-serif;" th:text="${loan.book.title}">
+                                        Título del Libro</h3>
+                                </div>
+                                <!-- Cambié los detalles de préstamos para usar el mismo estilo de letra -->
+                                <p class="mt-3 mb-1 text-xs font-medium text-blue-800 uppercase"
+                                    style="font-family: 'Arial', sans-serif;">Detalles del Préstamo</p>
+                                <p class="mb-2 text-gray-600" style="font-family: 'Arial', sans-serif;"><strong>Autor:</strong>
+                                    <span th:text="${loan.book.author}"></span></p>
+                                <p class="mb-2 text-gray-600" style="font-family: 'Arial', sans-serif;"><strong>Fecha de Solicitud:</strong>
+                                    <span th:text="${loan.requestDate.format(dateFormatter)}"></span></p>
+                                <p class="mb-2 text-gray-600" style="font-family: 'Arial', sans-serif;"><strong>Fecha Esperada de Devolución:</strong>
+                                    <span th:text="${loan.loanDate.format(dateFormatter)}"></span></p>
+                
+                                <!-- Mensajes basados en el estado del préstamo -->
+                                <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).PENDING}"
+                                    class="text-yellow-500 font-bold mb-1"
+                                    style="font-family: 'Arial', sans-serif;">
+                                    ¡Acude con el Bibliotecario para Aceptar tu solicitud de préstamo!
+                                </p>
+                                <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).ACCEPTED and loan.returnDate == null}"
+                                    class="text-red-600 font-bold mb-1"
+                                    style="font-family: 'Arial', sans-serif;">
+                                    ¡El Libro lo tienes en préstamo, devuélvelo antes de la fecha esperada!
+                                </p>
+                                <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).RETURNED}"
+                                    class="text-green-600 font-bold mb-1"
+                                    style="font-family: 'Arial', sans-serif;">
+                                    ¡Libro devuelto, puedes volver a solicitarlo!
+                                </p>
+                                <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).OVERDUE}"
+                                    class="text-red-600 font-bold mb-1"
+                                    style="font-family: 'Arial', sans-serif;">
+                                    ¡La fecha de devolución ya pasó, por favor devuélvelo lo antes posible!
+                                </p>
+                                <p th:if="${loan.status == T(com.biblioteca.v1.proyectobiblioteca.persistence.entities.Loan$LoanStatus).REJECTED}"
+                                    class="text-red-600 font-bold mb-1"
+                                    style="font-family: 'Arial', sans-serif;">
+                                    ¡Solicitud de préstamo rechazada!
+                                </p>
+                
+                                <p class="text-gray-700" style="font-family: 'Arial', sans-serif;"><strong>Estado:</strong> <span
+                                        th:text="${loan.status}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+
 
         </div>
     </div>
