@@ -9,7 +9,7 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Contenedor principal -->
     <div class="flex-grow flex">
-        <!-- Barra de navegación lateral con color azul (como en la página de Agregar Libro) -->
+        <!-- Barra de navegación lateral con color azul -->
         <nav class="w-1/5 bg-blue-800 text-white min-h-screen p-4">
             <ul class="space-y-4">
                 <li><a href="/global/index" class="hover:text-gray-200">Página Principal</a></li>
@@ -27,40 +27,54 @@
         </nav>
 
         <!-- Sección de contenido principal -->
-        <div class="w-4/5 p-8 bg-white shadow-md rounded-lg m-8">
-            <!-- Título principal -->
-            <h1 class="text-3xl font-bold mb-8 text-gray-800">Mi Perfil</h1>
+        <div class="flex-grow p-10 flex">
+            <div class="w-2/3">
+                <h1 class="font-bold text-5xl">Mi Perfil</h1>
+                <div class="grid grid-cols-1 gap-8">
+                    <!-- Formulario de actualización de perfil -->
+                    <form th:action="@{/profile/actualizar}" method="post" class="space-y-6">
+                        <div>
+                            <label class="block font-semibold" for="username">Nombre de usuario</label>
+                            <input type="text" id="username" name="username" th:value="${user.username}"
+                                class="w-full shadow-inner bg-gray-100 rounded-lg font-medium text-2xl p-4 border-none block mt-1" />
+                            <span th:if="${usernameError}" th:text="${usernameError}"
+                                class="text-red-500 text-sm"></span>
+                        </div>
 
-            <!-- Formulario de actualización de perfil -->
-            <form th:action="@{/profile/actualizar}" method="post" class="space-y-6">
-                <!-- Campo de usuario -->
-                <div>
-                    <label for="username" class="block text-lg font-semibold text-gray-700">Nombre de usuario</label>
-                    <input type="text" id="username" name="username" th:value="${user.username}"
-                        class="form-input mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3" />
-                    <span th:if="${usernameError}" th:text="${usernameError}" class="text-red-500 text-sm"></span>
+                        <div class="mt-4">
+                            <label class="block font-semibold" for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" th:value="${user.email}"
+                                class="w-full shadow-inner bg-gray-100 rounded-lg font-medium text-2xl p-4 border-none block mt-1" />
+                            <span th:if="${emailError}" th:text="${emailError}" class="text-red-500 text-sm"></span>
+                        </div>
+
+                        <!-- Botón de enviar -->
+                        <div class="flex items-center justify-between mt-8">
+                            <button type="submit"
+                                class="inline-block rounded bg-blue-600 px-8 pb-3 pt-3 text-sm font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 motion-reduce:transition-none">
+                                Actualizar
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Mensaje de error general -->
+                    <div th:if="${error}" class="mt-4 text-red-500 font-semibold" th:text="${error}"></div>
                 </div>
+            </div>
 
-                <!-- Campo de correo electrónico -->
-                <div>
-                    <label for="email" class="block text-lg font-semibold text-gray-700">Correo electrónico</label>
-                    <input type="email" id="email" name="email" th:value="${user.email}"
-                        class="form-input mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3" />
-                    <span th:if="${emailError}" th:text="${emailError}" class="text-red-500 text-sm"></span>
+            <!-- Sección de instrucciones -->
+            <aside class="ml-10 w-2/4 flex-shrink-0">
+                <div class="bg-gray-100 p-8 rounded h-full">
+                    <h2 class="font-bold text-2xl">Instrucciones</h2>
+                    <ul class="list-disc mt-4 list-inside">
+                        <li>Debes proporcionar una dirección de correo electrónico y una contraseña válidas para cambiar
+                            tu nombre de usuario y correo.</li>
+                        <li>Los usuarios no deben utilizar lenguaje ofensivo, vulgar o inapropiado en su nombre de
+                            usuario o en la información de su perfil.</li>
+                        <li>Los usuarios no deben crear múltiples cuentas para la misma persona.</li>
+                    </ul>
                 </div>
-
-
-                <!-- Botón de enviar -->
-                <div class="flex justify-end">
-                    <button type="submit"
-                        class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 shadow-lg">
-                        Actualizar
-                    </button>
-                </div>
-            </form>
-
-            <!-- Mensaje de error general -->
-            <div th:if="${error}" class="mt-4 text-red-500 font-semibold" th:text="${error}"></div>
+            </aside>
         </div>
     </div>
 
