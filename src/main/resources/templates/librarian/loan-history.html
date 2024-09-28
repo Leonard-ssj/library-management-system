@@ -16,9 +16,10 @@
                 <li><a href="/librarian/list-books" class="hover:text-gray-200">Gestionar Libros</a></li>
                 <li><a href="/librarian/add-book" class="hover:text-gray-200">Agregar Libro</a></li>
                 <li><a href="/librarian/manage-loans" class="hover:text-gray-200">Solicitudes de Préstamos</a></li>
-                <li><a href="/librarian/books-returns" class="hover:text-gray-200">Devolucion de Prestamo</a></li>
-                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Prestamos Devueltos</a></li>
-                
+                <li><a href="/librarian/books-returns" class="hover:text-gray-200">Devolución de Préstamo</a></li>
+                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Préstamos Devueltos</a>
+                </li>
+
                 <!-- Enlace de cierre de sesión -->
                 <li class="mt-auto">
                     <form th:action="@{/logout}" method="post">
@@ -32,29 +33,36 @@
 
         <!-- Sección principal -->
         <div class="w-4/5 p-8">
-            <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Historial de Préstamos Devueltos</h1>
+            <h1 class="font-bold text-5xl mb-8">Historial de Préstamos Devueltos</h1>
 
             <!-- Tabla de historial de préstamos -->
-            <table class="min-w-full bg-white rounded-lg shadow-md text-center">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 bg-blue-800 text-white">ID del Préstamo</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Libro</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Usuario</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Fecha de Devolución</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="loan : ${returnedLoans}">
-                        <td class="border py-2 px-4" th:text="${loan.id}">ID</td>
-                        <td class="border py-2 px-4" th:text="${loan.book.title}">Título del Libro</td>
-                        <td class="border py-2 px-4" th:text="${loan.user.username}">Usuario</td>
-                        <td class="border py-2 px-4" th:text="${loan.returnDate}">Fecha de Devolución</td>
-                        <td class="border py-2 px-4" th:text="${loan.status}">Estado</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="container mx-auto p-6 font-mono">
+                <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+                    <div class="w-full overflow-x-auto">
+                        <table class="min-w-full bg-white rounded-lg shadow-md text-center">
+                            <thead>
+                                <tr
+                                    class="text-lg font-bold tracking-wide text-left text-white bg-blue-800 uppercase border-b border-gray-600">
+                                    <th class="py-2 px-4">ID del Préstamo</th>
+                                    <th class="py-2 px-4">Libro</th>
+                                    <th class="py-2 px-4">Usuario</th>
+                                    <th class="py-2 px-4">Fecha de Devolución</th>
+                                    <th class="py-2 px-4">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="loan : ${returnedLoans}">
+                                    <td class="border py-2 px-4" th:text="${loan.id}">ID</td>
+                                    <td class="border py-2 px-4" th:text="${loan.book.title}">Título del Libro</td>
+                                    <td class="border py-2 px-4" th:text="${loan.user.username}">Usuario</td>
+                                    <td class="border py-2 px-4" th:text="${loan.returnDate}">Fecha de Devolución</td>
+                                    <td class="border py-2 px-4" th:text="${loan.status}">Estado</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
