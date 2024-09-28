@@ -13,7 +13,7 @@
             <ul class="space-y-4">
                 <li><a href="/global/index" class="hover:text-gray-200">Página Principal</a></li>
                 <li><a href="/profile" class="hover:text-gray-200">Mi Perfil</a></li>
-                <li><a href="/user/my-loans" class="hover:text-gray-200">Mis Prestamos</a></li>
+                <li><a href="/user/my-loans" class="hover:text-gray-200">Mis Préstamos</a></li>
                 <li class="mt-auto">
                     <form th:action="@{/logout}" method="post">
                         <button type="submit" class="hover:text-gray-200">Cerrar sesión</button>
@@ -36,11 +36,30 @@
 
             <!-- Información del libro -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <h2 class="text-xl font-bold mb-4" th:text="${book.title}">Título del Libro</h2>
-                <p class="text-gray-700 mb-2"><strong>Autor:</strong> <span th:text="${book.author}">Autor del Libro</span></p>
-                <p class="text-gray-700 mb-2"><strong>ISBN:</strong> <span th:text="${book.isbn}">0000000000000</span></p>
-                <p class="text-gray-700"><strong>Cantidad Disponible:</strong> <span th:text="${book.availableQuantity}">0</span></p>
-                <p class="text-gray-700"><strong>Fecha de Solicitud:</strong> <span th:text="${#dates.format(new java.util.Date(), 'dd-MM-yyyy')}"></span></p>
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-base font-semibold leading-7 text-gray-900" th:text="'Detalles del libro: ' + ${book.title}"></h3>
+                    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Información del libro y solicitud de préstamo.</p>
+                </div>
+                <div class="mt-6 border-t border-gray-100">
+                    <dl class="divide-y divide-gray-100">
+                        <div class="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
+                            <dt class="text-sm font-medium text-gray-900">Autor</dt>
+                            <dd class="mt-1 text-sm text-gray-700 sm:col-span-2" th:text="${book.author}"></dd>
+                        </div>
+                        <div class="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
+                            <dt class="text-sm font-medium text-gray-900">ISBN</dt>
+                            <dd class="mt-1 text-sm text-gray-700 sm:col-span-2" th:text="${book.isbn}"></dd>
+                        </div>
+                        <div class="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
+                            <dt class="text-sm font-medium text-gray-900">Cantidad Disponible</dt>
+                            <dd class="mt-1 text-sm text-gray-700 sm:col-span-2" th:text="${book.availableQuantity}"></dd>
+                        </div>
+                        <div class="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
+                            <dt class="text-sm font-medium text-gray-900">Fecha de Solicitud</dt>
+                            <dd class="mt-1 text-sm text-gray-700 sm:col-span-2" th:text="${#dates.format(new java.util.Date(), 'dd-MM-yyyy')}"></dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
 
             <!-- Formulario de solicitud de préstamo -->
@@ -49,15 +68,13 @@
                 <input type="hidden" name="user.id" th:value="${user.id}" />
 
                 <div class="mb-4">
-                    <p class="text-gray-700"><strong>Fecha de Solicitud:</strong> <span th:text="${#dates.format(new java.util.Date(), 'dd-MM-yyyy')}"></span></p>
-
-                    <label for="loanDuration" class="block text-gray-700">Duración del Préstamo:</label>
-                    <select id="loanDuration" name="duration" class="border border-gray-300 rounded-md p-2 w-full">
+                    <label for="loanDuration" class="block text-sm font-medium text-gray-900">Duración del Préstamo:</label>
+                    <select id="loanDuration" name="duration" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
                         <option th:each="duration : ${durations}" th:value="${duration}" th:text="${duration.label}"></option>
                     </select>
                 </div>
 
-                <button type="submit" class="bg-blue-800 text-white font-bold py-2 px-4 rounded">Solicitar Préstamo</button>
+                <button type="submit" class="inline-block rounded bg-blue-600 px-8 pb-3 pt-3 text-sm font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 motion-reduce:transition-none">Solicitar Préstamo</button>
             </form>
         </div>
     </div>
