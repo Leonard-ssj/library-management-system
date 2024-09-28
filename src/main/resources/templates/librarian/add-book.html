@@ -28,77 +28,77 @@
         </nav>
 
         <!-- Sección de contenido principal -->
-        <div class="w-4/5 p-8">
-            <!-- Título principal -->
-            <h1 class="text-3xl font-bold mb-8 text-gray-800">Agregar Libro</h1>
+<div class="w-4/5 p-8">
+    <!-- Título principal -->
+    <h1 class="font-bold text-5xl mb-8">Agregar Libro</h1>
 
-            <!-- Formulario para agregar un libro -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <form th:action="@{/librarian/add-book}" th:object="${book}" method="post" enctype="multipart/form-data" class="space-y-4">
-                    <!-- Título -->
-                    <div>
-                        <label for="title" class="block text-gray-700 font-bold mb-2">Título:</label>
-                        <input type="text" id="title" th:field="*{title}" placeholder="Título del libro" required
-                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
-                    </div>
-
-                    <!-- Autor -->
-                    <div>
-                        <label for="author" class="block text-gray-700 font-bold mb-2">Autor:</label>
-                        <input type="text" id="author" th:field="*{author}" placeholder="Autor del libro" required
-                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
-                    </div>
-
-                    <!-- ISBN -->
-                    <div>
-                        <label for="isbn" class="block text-gray-700 font-bold mb-2">ISBN:</label>
-                        <input type="text" id="isbn" th:field="*{isbn}" placeholder="ISBN del libro" required
-                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
-                    </div>
-
-                    <!-- Cantidad -->
-                    <div>
-                        <label for="quantity" class="block text-gray-700 font-bold mb-2">Cantidad:</label>
-                        <input type="number" id="quantity" th:field="*{quantity}" placeholder="Cantidad de ejemplares" min="1" required
-                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
-                    </div>
-
-                    <!-- Fecha de Publicación -->
-                    <div>
-                        <label for="publicationDate" class="block text-gray-700 font-bold mb-2">Fecha de Publicación:</label>
-                        <input type="date" id="publicationDate" th:field="*{publicationDate}" required
-                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
-                    </div>
-
-                    <!-- Categoría -->
-                    <div>
-                        <label for="category" class="block text-gray-700 font-bold mb-2">Categoría:</label>
-                        <select id="category" th:field="*{category}" required
-                                class="border border-gray-300 rounded-lg px-4 py-2 w-full">
-                            <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
-                        </select>
-                    </div>
-
-                    <!-- Imagen del Libro -->
-                    <div>
-                        <label for="file" class="block text-gray-700 font-bold mb-2">Imagen del Libro:</label>
-                        <input type="file" id="file" name="file" accept=".jpg,.jpeg,.png"
-                               class="border border-gray-300 rounded-lg px-4 py-2 w-full">
-                    </div>
-
-
-                    <!-- Mensaje de Error -->
-                    <div th:if="${error}" class="text-red-500">
-                        <p th:text="${error}"></p>
-                    </div>
-
-                    <!-- Botón para guardar -->
-                    <div>
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md px-4 py-2">Guardar</button>
-                    </div>
-                </form>
+    <!-- Formulario para agregar un libro -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <form th:action="@{/librarian/add-book}" th:object="${book}" method="post" enctype="multipart/form-data" class="space-y-6">
+            <!-- Título -->
+            <div class="flex flex-col">
+                <label for="title" class="block text-sm font-medium text-gray-600 mb-1">Título:</label>
+                <input type="text" id="title" th:field="*{title}" placeholder="Ingrese el título del libro" required
+                       class="border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm rounded-lg p-2 w-full">
             </div>
-        </div>
+
+            <!-- Autor -->
+            <div class="flex flex-col">
+                <label for="author" class="block text-sm font-medium text-gray-600 mb-1">Autor:</label>
+                <input type="text" id="author" th:field="*{author}" placeholder="Ingrese el autor del libro" required
+                       class="border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm rounded-lg p-2 w-full">
+            </div>
+
+            <!-- ISBN -->
+            <div class="flex flex-col">
+                <label for="isbn" class="block text-sm font-medium text-gray-600 mb-1">ISBN:</label>
+                <input type="text" id="isbn" th:field="*{isbn}" placeholder="Ingrese el ISBN" required
+                       class="border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm rounded-lg p-2 w-full">
+            </div>
+
+            <!-- Cantidad -->
+            <div class="flex flex-col">
+                <label for="quantity" class="block text-sm font-medium text-gray-600 mb-1">Cantidad:</label>
+                <input type="number" id="quantity" th:field="*{quantity}" placeholder="Ingrese la cantidad" min="1" required
+                       class="border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm rounded-lg p-2 w-full">
+            </div>
+
+            <!-- Fecha de Publicación -->
+            <div class="flex flex-col">
+                <label for="publicationDate" class="block text-sm font-medium text-gray-600 mb-1">Fecha de Publicación:</label>
+                <input type="date" id="publicationDate" th:field="*{publicationDate}" required
+                       class="border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm rounded-lg p-2 w-full">
+            </div>
+
+            <!-- Categoría -->
+            <div class="flex flex-col">
+                <label for="category" class="block text-sm font-medium text-gray-600 mb-1">Categoría:</label>
+                <select id="category" th:field="*{category}" required
+                        class="border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm rounded-lg p-2 w-full">
+                    <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+                </select>
+            </div>
+
+            <!-- Imagen del Libro -->
+            <div class="flex flex-col">
+                <label for="file" class="block text-sm font-medium text-gray-600 mb-1">Imagen del Libro:</label>
+                <input type="file" id="file" name="file" accept=".jpg,.jpeg,.png"
+                       class="border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm rounded-lg p-2 w-full">
+            </div>
+
+            <!-- Mensaje de Error -->
+            <div th:if="${error}" class="text-red-500 text-sm">
+                <p th:text="${error}"></p>
+            </div>
+
+            <!-- Botón para guardar -->
+            <div class="flex justify-end">
+                <button type="submit" class="inline-block rounded bg-blue-600 px-8 pb-3 pt-3 text-sm font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 motion-reduce:transition-non">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
     </div>
 
     <!-- Pie de página -->
