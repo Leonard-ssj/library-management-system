@@ -15,7 +15,8 @@
                 <li><a href="/librarian/add-book" class="hover:text-gray-200">Agregar Libro</a></li>
                 <li><a href="/librarian/manage-loans" class="hover:text-gray-200">Solicitudes de Préstamos</a></li>
                 <li><a href="/librarian/books-returns" class="hover:text-gray-200">Devolucion de Prestamo</a></li>
-                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Prestamos Devueltos</a></li>
+                <li><a href="/librarian/loan-history" class="hover:text-gray-200">Historial de Prestamos Devueltos</a>
+                </li>
                 <!-- Enlace de cierre de sesión -->
                 <li class="mt-auto">
                     <form th:action="@{/logout}" method="post">
@@ -29,7 +30,7 @@
 
         <!-- Sección principal -->
         <div class="w-4/5 p-8">
-            <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Gestionar Solicitudes de Préstamos</h1>
+            <h1 class="font-bold text-5xl mb-10">Gestionar Solicitudes de Préstamos</h1>
 
             <!-- Bloque para mostrar el error -->
             <div th:if="${error}" class="bg-red-200 text-red-800 p-2 rounded text-center">
@@ -37,43 +38,65 @@
             </div>
 
             <!-- Tabla para mostrar los préstamos pendientes -->
-            <table class="min-w-full bg-white rounded-lg shadow-md text-center">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Libro</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Usuario</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Fecha de Solicitud</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Duración</th>
-                        <th class="py-2 px-4 bg-blue-800 text-white">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="loan : ${pendingLoans}">
-                        <td class="border py-2 px-4" th:text="${loan.book.title}">Libro</td>
-                        <td class="border py-2 px-4" th:text="${loan.user.username}">Usuario</td>
-                        <td class="border py-2 px-4" th:text="${loan.requestDate}">Fecha de Solicitud</td>
-                        <!-- Mostrar la duración legible utilizando el método getLabel() -->
-                        <td class="border py-2 px-4" th:text="${loan.duration.label}">Duración</td>
-                        <td class="border py-2 px-4">
-                            <div class="flex justify-center space-x-2">
-                                <!-- Flex para centrar y espacio entre botones -->
-                                <form th:action="@{/librarian/accept-loan/{loanId}(loanId=${loan.id})}" method="post">
-                                    <button type="submit"
-                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
-                                        Aceptar
-                                    </button>
-                                </form>
-                                <form th:action="@{/librarian/reject-loan/{loanId}(loanId=${loan.id})}" method="post">
-                                    <button type="submit"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow">
-                                        Rechazar
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="container mx-auto p-6 font-mono">
+                <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+                    <div class="w-full overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr
+                                    class="text-lg font-bold tracking-wide text-left text-white bg-blue-800 uppercase border-b border-gray-600">
+                                    <th class="px-4 py-3">Libro</th>
+                                    <th class="px-4 py-3">Usuario</th>
+                                    <th class="px-4 py-3">Fecha de Solicitud</th>
+                                    <th class="px-4 py-3">Duración</th>
+                                    <th class="px-4 py-3 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="bg-white">
+                                <tr th:each="loan : ${pendingLoans}" class="text-gray-700">
+                                    <td class="px-4 py-3 border">
+                                        <p class="font-semibold text-black" th:text="${loan.book.title}">Libro</p>
+                                    </td>
+                                    <td class="px-4 py-3 border">
+                                        <div class="flex items-center text-sm">
+                                            <div>
+                                                <p class="font-semibold text-black" th:text="${loan.user.username}">
+                                                    Usuario</p>
+                                                <p class="text-xs text-gray-600">Usuario</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm border" th:text="${loan.requestDate}">Fecha de
+                                        Solicitud</td>
+                                    <td class="px-4 py-3 text-xs border" th:text="${loan.duration.label}">Duración</td>
+                                    <td class="px-4 py-3 text-sm border">
+                                        <div class="flex justify-center space-x-4">
+                                            <!-- Botón Aceptar -->
+                                            <form th:action="@{/librarian/accept-loan/{loanId}(loanId=${loan.id})}"
+                                                method="post">
+                                                <button type="submit"
+                                                    class="px-4 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-lg hover:bg-green-500 hover:text-white">
+                                                    Aceptar
+                                                </button>
+                                            </form>
+                                            <!-- Botón Rechazar -->
+                                            <form th:action="@{/librarian/reject-loan/{loanId}(loanId=${loan.id})}"
+                                                method="post">
+                                                <button type="submit"
+                                                    class="px-4 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-lg hover:bg-red-500 hover:text-white">
+                                                    Rechazar
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
