@@ -12,34 +12,28 @@ El sistema permite a los bibliotecarios gestionar los libros y préstamos, a los
 - **Frontend**: Thymeleaf y TailwindUI (para estilos)
 - **Control de Versiones**: Git y GitHub
 
-## Instalación
 
-Para instalar y configurar el proyecto en un entorno local, sigue estos pasos:
-
-1. **Clona el repositorio**:
-   ```bash
-   git clone https://github.com/Leonard-ssj/tu_repositorio.git
-Navega al directorio del proyecto:
-
-bash
-Copiar código
-cd tu_repositorio
-Instala las dependencias: Si estás utilizando Maven, ejecuta:
-
-bash
-Copiar código
-mvn install
-Configura la base de datos:
+## Configura la base de datos:
 
 Asegúrate de tener una base de datos MySQL configurada.
-Los usuarios con roles de librarian y admin deben ser insertados o creados manualmente en la base de datos.
 Si lo deseas, puedo proporcionarte un archivo SQL exportado desde mi MySQL para que lo ejecutes y tengas la misma configuración.
-Ejecuta la aplicación: Para iniciar la aplicación, usa el siguiente comando:
+Este archivo lo puedes encontrar en la carpeta de database_import el archivo se llama "proyectobiblioteca.sql", tienes que importar este archivo
+en Mysql pero antes tienes que crear una db con el nombre que tenemos en el application.properties nombre de la db:"biblioteca_proyect" asi se llama la db para que se compatible con el sql
+para que puedas tener la misma db ya que no se puede generar usuario con el ROL de ADMIN y LIBRARIAN ya que necesitarias crearlos desde Mysql pero con la importacion de la db 
+ya tendrias estos usuarios con los roles.
+Para acceder a el Usuario con el ROL de ADMIN inicia sesión al iniciar el proyecto en Nombre de usuario:admin123 y Contraseña:Administrador123, y 
+para el usuario con el ROL de LIBRAIAN seria en el Nombre de usuario:librarianUser y Contraseña:bibliotecario123, con esto ya podras acceder a los recursos 
+autorizados para estos roles.
 
-bash
-Copiar código
-mvn spring-boot:run
-Uso
+Si deseas crearlos desde la Mysql en la db que quieras primero tienes que crear la conexion en el application.properties por default ya la tenemos con el nombre de "biblioteca_proyect" pero le puedes cambies el nombre, luego inicia el proyecto para que jpa y hibernate hagan su trabajo de mapear las entidades y tablas, despues ve a tu Mysql y la tabla que creaste anteriormente e inserta los usuarios en la tabla de "users" pero en el campo de password utilizamos un metodo de encryptacion: 
+// Codificador de contraseñas
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+ , puedes crear una contraseña con este metodo para copiarla y pegarla en el campo de password cuando intentes crear el usuario con el rol de librarian o admin, despues de esto tienes que ir a la tabla de "user_roles" e insertar el id del usuario con el id del rol de admin o librarian, este metodo solo sirve si no importaste el archivo .sql que antes te describi o quieres crear mas admins o librarians, para los usuarios con el rol de USER solo se pueden crear en la pagina de register por defecto ya tienen ell rol de USER o tambien puedes hacerlo desde la db. 
+
+
 Después de iniciar la aplicación, puedes acceder a la interfaz a través de tu navegador web. Por defecto, se ejecuta en http://localhost:8080.
 
 Funcionalidades Principales
