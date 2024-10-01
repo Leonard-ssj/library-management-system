@@ -12,6 +12,11 @@ El sistema permite a los bibliotecarios gestionar los libros y préstamos, a los
 - **Frontend**: Thymeleaf y TailwindUI (para estilos)
 - **Control de Versiones**: Git y GitHub
 
+## Documentación del Sistema
+En la carpeta documentacion/ se encuentra la documentación completa del sistema de gestión de bibliotecas SIGEL, la cual detalla nuestra metodología de desarrollo, incluyendo los requisitos funcionales y no funcionales del sistema. Este documento asegura que todos los procesos y decisiones del proyecto están claramente documentados y alineados con las necesidades del cliente.
+
+Además, la documentación incluye los diagramas entidad-relación y el diagrama de la base de datos, proporcionando una visión clara sobre la estructura de la información y cómo las entidades se relacionan en el sistema. Esta documentación es esencial para entender el diseño y funcionamiento integral del sistema.
+
 
 ## Configura la base de datos:
 
