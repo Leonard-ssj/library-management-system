@@ -41,7 +41,7 @@ Si deseas crearlos desde la Mysql en la db que quieras primero tienes que crear 
 
 Después de iniciar la aplicación, puedes acceder a la interfaz a través de tu navegador web. Por defecto, se ejecuta en http://localhost:8080.
 
-Funcionalidades Principales
+## Funcionalidades Principales
 Administración de libros: Agregar, editar y eliminar libros.
 Gestión de préstamos: Registrar préstamos y devoluciones de libros.
 Gestión de usuarios: Registrar nuevos usuarios y asignarles roles.
@@ -50,7 +50,7 @@ El sistema permite a los usuarios acceder a diferentes funcionalidades según su
 
 El sistema utiliza Spring Security para implementar un control de acceso seguro, garantizando que solo los usuarios autorizados puedan acceder a las funciones específicas.
 
-Mejoras Futuras
+## Mejoras Futuras
 Implementar una arquitectura basada en microservicios para escalar el sistema de manera más efectiva.
 Añadir autenticación de dos pasos para mejorar la seguridad.
 Integrar OAuth2 para permitir el inicio de sesión mediante cuentas de terceros (Google, Facebook, etc.).
@@ -73,7 +73,8 @@ git push origin nombre-de-tu-rama
 Crea un Pull Request.
 
 
-Contacto:
+## Contacto:
 Leonardo Alonso Aldana,
-Correo: pardo0435@gmail.com,
+Correo: leonardoalonsoaldana@gmail.com,
+Instagram: leonard_developer,
 GitHub: Leonard-ssj
