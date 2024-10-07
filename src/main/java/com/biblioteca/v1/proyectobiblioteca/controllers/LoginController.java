@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
+    // Método para mostrar el formulario de inicio de sesión
     @GetMapping("/global/login")
     public String showLoginForm() {
-        return "global/login"; // Retorna el nombre de la vista para la página de login
+        // Retorna el nombre de la vista para la página de login
+        return "global/login";
     }
 }
