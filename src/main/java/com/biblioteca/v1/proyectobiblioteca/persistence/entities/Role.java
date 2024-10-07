@@ -12,6 +12,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * La clase Role representa un rol de usuario en el sistema.
+ * Utiliza JPA para mapear esta clase a la tabla 'roles' en la base de datos.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,8 +26,12 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;  // Identificador único para el rol
 
+    /**
+     * El nombre del rol, representado por un valor de la enumeración ERole.
+     * Utilizado para definir el tipo de rol del usuario (e.g., ADMIN, LIBRARIAN, USER).
+     */
     @Enumerated(EnumType.STRING)
-    private ERole name;
+    private ERole name; // Rol del usuario (ADMIN, LIBRARIAN, USER)
 }
